@@ -1,0 +1,23 @@
+{
+    "site": [{
+            "code": "string",
+            "mrn": "string"
+        }
+    ],
+    "email": ["string"],
+    "addresses": [{
+            "line1": #(line1),
+            "line2": #(line2),
+            "city": #(city),
+            "state": #(state),
+            "postalCode": #(postalCode)
+        }
+    ],
+    "names": [{
+            "first": "string",
+            "middle": "string",
+            "last": "string",
+            "suffix": "string"
+        }
+    ]
+}

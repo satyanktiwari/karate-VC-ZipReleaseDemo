@@ -1,0 +1,5 @@
+line1,line2,city,state,postalCode
+address line 1,,city1,state1,postalCode1
+address line 2,address line 3,,state2,postalCode2
+address line 3,address line 4,city3,,postalCode3
+address line 4,address line 5,city4,state4,
