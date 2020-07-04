@@ -1,10 +1,10 @@
 {
     "site": [{
-            "code": "string",
-            "mrn": "string"
+            "code": #(code),
+            "mrn": #(mrn)
         }
     ],
-    "email": ["string"],
+    "email": [#(email)],
     "addresses": [{
             "line1": #(line1),
             "line2": #(line2),
@@ -14,10 +14,10 @@
         }
     ],
     "names": [{
-            "first": "string",
-            "middle": "string",
-            "last": "string",
-            "suffix": "string"
+            "first": #(first),
+            "middle": #(middle),
+            "last": #(last),
+            "suffix": #(suffix)
         }
     ]
 }
