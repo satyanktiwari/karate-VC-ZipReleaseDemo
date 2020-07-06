@@ -184,3 +184,37 @@ Given request
   * print newLine, response
   Then status 200
 
+#  Magic variable
+Scenario Outline: name is <name> and age is <age>
+  * def temp = '<name>'
+  * print newLine,"name is ==>", name, newLine
+
+  # Directly refer to the variable name
+  * match temp == name
+  * print newLine,"__row.name is ==>", __row.name, newLine
+  * match temp == __row.name
+  * print newLine,"__num is ==>", __num, newLine
+
+  # my understanding is the If row num =0 then argument 1 :(else) argument 2
+  * def expected = __num == 0 ? 'name is Bob and age is 5' : 'name is Nyan and age is 6'
+  * match expected == karate.info.scenarioName
+
+  Examples:
+    | name | age |
+    | Bob  | 5   |
+    | Nyan | 6   |
+
+#if a string value within a JSON (or XML) object declaration is enclosed between #( and ) - it will be evaluated as a JavaScript expression
+# https://github.com/intuit/karate#scenario-outline-enhancements
+# Type Hints: if the Examples column header has a ! appended, each value will be evaluated as a JavaScript data-type (number, boolean, or even in-line JSON) - else it defaults to string.
+
+    Scenario Outline: magic variables with type hints
+  * def expected = [{ name: 'Bob', age: 5 }, { name: 'Nyan', age: 6 }]
+  * print newLine, "__row value is now", __row, newLine
+  * print newLine, "__num value is now", __num, newLine
+  * match __row == expected[__num]
+
+  Examples:
+    | name | age! |
+    | Bob  | 5    |
+    | Nyan | 6    |
