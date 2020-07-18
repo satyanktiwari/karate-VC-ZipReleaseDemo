@@ -3,5 +3,9 @@
     "line2":  #(line2),
     "city": #(city),
     "state": #(state),
-    "postalCode": #(postalCode)
+    "postalCode": #(postalCode),
+    "country": #(country),
+    "continent": #(continent),
+    "landmark": #(landmark)
+
 }

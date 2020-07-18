@@ -55,6 +55,7 @@ Given def address =
     "city": <city>,
     "state": <state>,
     "postalCode": <postalCode>
+
 }
 """
 # * print address
@@ -64,7 +65,7 @@ Given def address =
 * print newLine, line1Only,newLine
 
 Examples:
-|line1|line2!|
+|line1!|line2!|
 |'this is add 1'|''|
 |'this is add 2'|'line2 add'|
 
@@ -100,3 +101,60 @@ Examples:
 |line1!|line2!|city!|state!|postalCode!|email!|first|middle|last|suffix|
 |'this is add 1'|''|''|''|''|''|''|''|''|''|
 |'this is add 2'|'line2 add'|'city1'|state1'|'postalCode1'|'email@email.com'|'fn'|'M'|'ln'|'dr.'|
+
+
+
+
+
+Scenario Outline: Only Line fields where json only has address fields
+Given def address = read('add.json')
+* def myCase = {line1:'#(address.line1)',line2:'#(address.line2)',country:'#(address.country)'}
+# * print myCase
+* def lineOnly = {addresses:['#(myCase)']}
+* print newLine, lineOnly,newLine
+
+Examples:
+|line1!|line2!|country!|
+|'this is add 1'|''|''|
+|'this is add 2'|'line2 add'|'ind'|
+
+
+Scenario Outline: Line with new fields where json only has address fields
+Given def address = read('add.json')
+* def myNewCase = {line1:'#(address.line1)',line2:'#(address.line2)',country:'#(address.country)'}
+* def newAdd = {addresses:['#(myNewCase)']}
+* print newLine, newAdd,newLine
+
+Examples:
+|line1!|line2!|country!|
+|'this is add 1'|''|''|
+|'this is add 2'|'line2 add'|'In'|
+
+Scenario: set via table
+    * def address = { line1: '' }
+    * set address
+    | path   | value |
+    | line1   | 'add line 1'|
+    | line2   | 'add line 2'|
+    * print newLine, address
+    * match address == { line1: 'add line 1', line2: 'add line 2' }
+
+    Scenario: set via table
+    * def address = karate.filterKeys(main, 'addresses')
+    * def newAddress = 
+    * set address
+    | path   | value |
+    | country   | 'country'|
+    | cont   | 'country'|
+    * print newLine, address
+    # * match address == { line1: 'add line 1', line2: 'add line 2' }
+
+
+# My assumptions during the earlier solution were:
+# 1 You are testing a Rest Api
+# 2. And Structure of expected payload would be fixed
+# And hence as in case 1, all the keys in the addresses array would be required.
+# So if you see Case 1, I've provided 2 examples - on the first run we are sending data for only Line 1 for all other keys we are not sending any values and in run 2 we are sending values for all the keys. 
+# So What you are saying is that the end point you would be testing will accept different formats?
+ 
+

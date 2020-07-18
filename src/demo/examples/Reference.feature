@@ -207,7 +207,8 @@ Scenario Outline: name is <name> and age is <age>
 #if a string value within a JSON (or XML) object declaration is enclosed between #( and ) - it will be evaluated as a JavaScript expression
 # https://github.com/intuit/karate#scenario-outline-enhancements
 # Type Hints: if the Examples column header has a ! appended, each value will be evaluated as a JavaScript data-type (number, boolean, or even in-line JSON) - else it defaults to string.
-
+# __row returns the whole row as a json
+# __num retruns the row number starting at 0
     Scenario Outline: magic variables with type hints
   * def expected = [{ name: 'Bob', age: 5 }, { name: 'Nyan', age: 6 }]
   * print newLine, "__row value is now", __row, newLine
@@ -218,3 +219,50 @@ Scenario Outline: name is <name> and age is <age>
     | name | age! |
     | Bob  | 5    |
     | Nyan | 6    |
+    # https://github.com/intuit/karate/blob/master/karate-demo/src/test/java/demo/search/dynamic-params.feature#L70
+
+    Scenario Outline: embedded expressions and type hints
+  * match __row == { name: '#(name)', alive: '#boolean' }
+
+  Examples:
+    | name | alive! |
+    | Bob  | false  |
+    | Nyan | true   |
+
+    Scenario Outline: inline json
+  * match __row == { first: 'hello', second: { a: 1 } }
+  * match first == 'hello'
+  * match second == { a: 1 }
+
+  Examples:
+    | first  | second!  |
+    | hello  | { a: 1 } |
+
+    # https://github.com/intuit/karate#fuzzy-matching
+
+
+    Scenario: append
+    * def foo = [{ a: 1 }]
+    * def bar = karate.append(foo, { b: 2 })
+    * print bar
+    * match bar == [{ a: 1 }, { b: 2 }]
+
+
+Scenario: table to json with expressions evaluated
+    * def one = 'hello'
+    * def two = { baz: 'world' }
+    * table json
+        | name    | bar |
+        | one     | 1     |
+        | two.baz | 2     |
+    * print json
+    * match json == [{ name: 'hello', bar: 1 }, { name: 'world', bar: 2 }]
+
+Scenario: set via table
+    * def address = { line1: '' }
+    * set address
+    | path   | value |
+    | line1   | 'add line 1'|
+    | line2   | 'add line 2'|
+    * print newLine, address
+    * match address == { line1: 'add line 1', line2: 'add line 2' }
