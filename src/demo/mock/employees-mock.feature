@@ -2,28 +2,27 @@
 Feature: stateful mock server
     for help, see: https://github.com/intuit/karate/wiki/ZIP-Release
 
-# karate -p 8080 -m src/demo/mock/cats-mock.feature
+# karate -p 8180 -m src/demo/mock/employees-mock.feature
 Background:
-* print '\n ============='
 * configure cors = true
 * def uuid = function(){ return java.util.UUID.randomUUID() + '' }
-* def cats = {}
+* def employees = {}
 
-Scenario: pathMatches('/cats') && methodIs('post')
+Scenario: pathMatches('/employees') && methodIs('post')
     * def cat = request
     * def id = uuid()
     * cat.id = id
-    * cats[id] = cat
+    * employees[id] = cat
     * def response = cat
 
-Scenario: pathMatches('/cats')
-    * def response = $cats.*
+Scenario: pathMatches('/employees')
+    * def response = $employees.*
 
-Scenario: pathMatches('/cats/{id}')
-    * def response = cats[pathParams.id]
+Scenario: pathMatches('/employees/{id}')
+    * def response = employees[pathParams.id]
 
 Scenario: pathMatches('/hardcoded')
-    * def response = { hello: 'world' }
+    * def response = { Status: 'success' }
 
 Scenario:
     # catch-all

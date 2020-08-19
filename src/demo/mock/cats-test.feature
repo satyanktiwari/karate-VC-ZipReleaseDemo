@@ -2,9 +2,13 @@ Feature: integration test for the mock
     for help, see: https://github.com/intuit/karate/wiki/ZIP-Release
 
 Background:
-    * def port = karate.env == 'mock' ? karate.start('cats-mock.feature').port : 8080
-    * url 'http://localhost:' + port + '/cats'
-
+    * print '\n -------------'
+    # * def starter = call read('start-mock.js')
+    # * def port = karate.env == 'mock' ? starter() : 8081
+    # * url 'http://localhost:' + port + '/cats'
+  * def port = karate.env == 'mock' ? karate.start('cats-mock.feature').port : 8080
+  * url 'http://localhost:' + port + '/cats'
+   
 Scenario: create cat
     Given request { name: 'Billie' }
     When method post

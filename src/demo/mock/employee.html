@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>employees</title>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  </head>
+  <body>
+    <div>
+      <a href="http://localhost:8180/employees">GET /employees</a> | <a href="http://localhost:8180/hardcoded">GET /hardcoded</a>
+    </div>
+    <p/>    
+    <div>
+      <label for="employeeName">Name: <input id="employeeName" value="Billie"/></label>
+      <button onclick="createemployee()">Create employee</button>
+    </div>    
+    <p/>
+    <div id="response"></div>
+    <script>
+      var createemployee = function() {
+        var name = $('#employeeName').val();
+        $.ajax({          
+          url: 'http://localhost:8180/employees',
+          data: JSON.stringify({ name: name }),
+          method: 'POST',
+          success: function(result) {
+            $('#response').html('created employee: ' + JSON.stringify(result));
+          }
+        });
+      };
+    </script>    
+  </body>
+</html>
+
