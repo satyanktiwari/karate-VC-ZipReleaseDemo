@@ -21,9 +21,7 @@ location.hash ="#/completed"
 
 Edit Todo
 document.querySelector("body > ng-view > section > section > ul > li:nth-child(2) > div > label").dispatchEvent(new Event('dblclick',{'bubbles':true}))
-
 document.querySelector("body > ng-view > section > section > ul > li:nth-child(2) .edit").value="ngtest"
-
 document.querySelector("body > ng-view > section > section > ul > li:nth-child(2) .edit").dispatchEvent(new Event("blur"))
 
 New Todo

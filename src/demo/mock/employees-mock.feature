@@ -9,11 +9,11 @@ Background:
 * def employees = {}
 
 Scenario: pathMatches('/employees') && methodIs('post')
-    * def cat = request
+    * def employee = request
     * def id = uuid()
-    * cat.id = id
-    * employees[id] = cat
-    * def response = cat
+    * employee.id = id
+    * employees[id] = employee
+    * def response = employee
 
 Scenario: pathMatches('/employees')
     * def response = $employees.*

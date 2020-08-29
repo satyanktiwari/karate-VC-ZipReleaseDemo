@@ -149,12 +149,15 @@ Scenario: set via table
     * print newLine, address
     # * match address == { line1: 'add line 1', line2: 'add line 2' }
 
+Scenario Outline:
+* print "this is test", <a>
 
-# My assumptions during the earlier solution were:
-# 1 You are testing a Rest Api
-# 2. And Structure of expected payload would be fixed
-# And hence as in case 1, all the keys in the addresses array would be required.
-# So if you see Case 1, I've provided 2 examples - on the first run we are sending data for only Line 1 for all other keys we are not sending any values and in run 2 we are sending values for all the keys. 
-# So What you are saying is that the end point you would be testing will accept different formats?
+Scenario Outline:
+* print "this is test", <a>
+
+Examples:
+|a!|
+|'hi'|
+
  
 

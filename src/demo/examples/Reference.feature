@@ -266,3 +266,8 @@ Scenario: set via table
     | line2   | 'add line 2'|
     * print newLine, address
     * match address == { line1: 'add line 1', line2: 'add line 2' }
+
+  Scenario: Download driver
+  * url 'http://localhost:4041/chromedriver'
+  * method get
+  * status 200
