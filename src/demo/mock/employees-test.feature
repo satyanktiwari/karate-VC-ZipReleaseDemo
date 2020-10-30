@@ -7,7 +7,7 @@ Background:
 
     # Scenario: create employee
     # * print "\n --------------------------------------------------------------------"
-    # * request {name: 'John'}
+    # * request {name: 'JohnY'}
     # * method post
     # * status 200
     # * def id = response.id
@@ -19,11 +19,13 @@ Background:
 
  Scenario: create employee 2 with address
     * print "\n --------------------------------------------------------------------"
-    * request {name: 'Davs', addressLine1:'address scenario for mock'}
+    * request [{name: 'Dev', addressLine1:'address scenario for mock'},{company:'Kalimoh'}]
     * method post
     * status 200
-
-# Scenario: Given a path match response
-
+    * def id = response.id
+    * path id
+    When method get
+    Then status 200
+     And match response contains { id: '#(id)', name: 'Dev' }
 
 

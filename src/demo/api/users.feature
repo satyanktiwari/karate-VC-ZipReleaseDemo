@@ -5,6 +5,7 @@ Feature: sample karate api test script
     * url 'https://jsonplaceholder.typicode.com'
 
   Scenario: get all users and then get the first user by id
+    * print '\n my name is ==================',myName
     Given path 'users'
     When method get
     Then status 200
