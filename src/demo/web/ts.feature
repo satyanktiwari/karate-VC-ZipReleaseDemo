@@ -19,3 +19,4 @@ Scenario: try to login to github
   * delay(1000 )
   * screenshot()
 
+#https://username@domain.com:password@url

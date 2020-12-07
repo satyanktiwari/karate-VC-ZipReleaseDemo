@@ -1,0 +1,12 @@
+{
+    "githubSignIn":{
+        "userID":"#login_field",
+        "password":"#password",
+        "btnk":"input[name=commit]",
+        "errorMessage":"#js-flash-container"
+    },
+    "googleSearch":{
+        "searchField":"input[name=q]",
+        "btnkLucky":"input[name=btnI]"
+    }
+}

@@ -4,11 +4,13 @@ Background:
 * def main = read('main.json')
 * def newLine = '\n***********\n'
 
-Scenario: Trying what this does
+Scenario: This will print onlythe addresses part
 * def payload = karate.filterKeys(main, 'addresses')
 * print payload
 
-Scenario Outline: trying to parametrize with outline
+# use the remove keyword instead of the filter keyword used above
+# parametrize line 1 in addresses using the 
+Scenario Outline: trying to parametrize using scenario outline
 * def payload = main
 * remove payload.site
 And remove payload.email
@@ -19,12 +21,15 @@ And remove payload.email
 # * def state = <state>
 # * def postalCode=<postalCode>
 * print payload
+* print 'variable value is', #(payload.addresses.line1)
 
 Examples:
 # |read('avinash.csv')|
 |line1|
 |'this is add 1'|
 
+# Try to define payload inline and then
+# parametrizing it with Examples
 Scenario Outline: TestCase1 - defining inline to see if it works
 Given def address = 
 """
@@ -36,9 +41,9 @@ Given def address =
     "postalCode": <postalCode>
 }
 """
-* print address
+* print newLine,'address is',address
 * def myCase = {line1:'#(address.line1)'}
-* print myCase
+* print newLine, 'my case is ',myCase
 * def line1Only = {addresses:['#(myCase)']}
 * print newLine, line1Only,newLine
 
@@ -61,8 +66,8 @@ Given def address =
 # * print address
 * def myCase = {line1:'#(address.line1)',line2:'#(address.line2)'}
 * print myCase
-* def line1Only = {addresses:['#(myCase)']}
-* print newLine, line1Only,newLine
+* def lines = {addresses:['#(myCase)']}
+* print newLine, lines,newLine
 
 Examples:
 |line1!|line2!|
@@ -110,8 +115,8 @@ Scenario Outline: Only Line fields where json only has address fields
 Given def address = read('add.json')
 * def myCase = {line1:'#(address.line1)',line2:'#(address.line2)',country:'#(address.country)'}
 # * print myCase
-* def lineOnly = {addresses:['#(myCase)']}
-* print newLine, lineOnly,newLine
+* def linenCountry = {addresses:['#(myCase)']}
+* print newLine, linenCountry,newLine
 
 Examples:
 |line1!|line2!|country!|
@@ -130,6 +135,7 @@ Examples:
 |'this is add 1'|''|''|
 |'this is add 2'|'line2 add'|'In'|
 
+# using seta keyword and table to add key value pairs
 Scenario: set via table
     * def address = { line1: '' }
     * set address
@@ -139,22 +145,24 @@ Scenario: set via table
     * print newLine, address
     * match address == { line1: 'add line 1', line2: 'add line 2' }
 
+# Since main.json is used it is an array
     Scenario: set via table
     * def address = karate.filterKeys(main, 'addresses')
-    * def newAddress = 
+    # * def newAddress = 
     * set address
     | path   | value |
-    | country   | 'country'|
+    | country| 'country'|
     | cont   | 'country'|
     * print newLine, address
     # * match address == { line1: 'add line 1', line2: 'add line 2' }
 
-Scenario Outline:
+Scenario:
 * print "this is test", <a>
 
 Scenario Outline:
 * print "this is test", <a>
 
+# value of a will not be printed as the value is a string 'hi' and we have defined it to be evluated as non string
 Examples:
 |a!|
 |'hi'|

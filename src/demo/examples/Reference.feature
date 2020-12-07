@@ -51,7 +51,7 @@ Scenario: Custom placeholder
 * def first = 'cruel'
 # Json
 * def json = { second: 'good',third:'bye' }
-# Table now calls the value of variables first and json
+# Table now calls the value (see value column) of variables first and json
 * replace text
     | token  | value       |
     | one    | first       |
@@ -74,6 +74,7 @@ Scenario: type-conv multi-line text1
       }
     }
     """
+    * print newLine, query, newLine
     * match query == read('query1.txt').replaceAll("\r", "")
 #\r is carriage return
 
